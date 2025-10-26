@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IT.SUPPORT.OM - WiFi Devices Pricing</title>
+<style>
+    :root {
+        --bg-body: #f8fafc;
+        --bg-card: #ffffff;
+        --bg-card-blur: rgba(255,255,255,0.6);
+        --bg-header: rgba(226,232,240,0.6);
+        --text-main: #0f172a;
+        --text-dim: #64748b;
+        --border-color: rgba(0,0,0,0.08);
+        --accent: #0ea5e9;
+        --accent-soft: rgba(14,165,233,0.12);
+        --danger: #ef4444;
+        --success: #22c55e;
+        --table-row-hover: rgba(14,165,233,0.07);
+        --pill-bg: rgba(14,165,233,0.12);
+        --pill-border: rgba(14,165,233,0.4);
+        --shadow-card: 0 30px 80px rgba(0,0,0,0.08);
+        --shadow-floating: 0 25px 60px rgba(0,0,0,0.15);
+    }
+
+    [data-theme="dark"] {
+        --bg-body: radial-gradient(circle at 20% 20%, #1e293b 0%, #0f172a 60%);
+        --bg-card: rgba(15,23,42,0.5);
+        --bg-card-blur: rgba(15,23,42,0.6);
+        --bg-header: rgba(30,41,59,0.4);
+        --text-main: #f8fafc;
+        --text-dim: #94a3b8;
+        --border-color: rgba(255,255,255,0.07);
+        --accent: #38bdf8;
+        --accent-soft: rgba(56,189,248,0.15);
+        --danger: #ef4444;
+        --success: #22c55e;
+        --table-row-hover: rgba(56,189,248,0.07);
+        --pill-bg: rgba(56,189,248,0.12);
+        --pill-border: rgba(56,189,248,0.4);
+        --shadow-card: 0 30px 80px rgba(0,0,0,0.6);
+        --shadow-floating: 0 25px 60px rgba(0,0,0,0.8);
+    }
+
+    * {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont,"Inter","Roboto","Segoe UI",sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        background: var(--bg-body);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        transition: background .2s linear, color .2s linear;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    /* HIDE/SHOW HANDLERS */
+    .hidden { display: none !important; }
+
+    /* ---------- Login Screen ---------- */
+    .login-screen {
+        background: var(--bg-card-blur);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-card);
+        border-radius: 1.5rem;
+        width: 100%;
+        max-width: 360px;
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        color: var(--text-main);
+    }
+
+    .login-header {
+        text-align: center;
+    }
+
+    .brand-circle {
+        width: 64px;
+        height: 64px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 30%, #38bdf8 0%, #0ea5e9 40%, #0f172a 70%);
+        border: 2px solid rgba(255,255,255,0.2);
+        box-shadow: 0 15px 50px rgba(56,189,248,0.4);
+        margin: 0 auto .75rem auto;
+        display: grid;
+        place-items: center;
+        font-weight: 600;
+        color: #fff;
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+        text-align: center;
+        line-height: 1.1;
+    }
+    [data-theme="light"] .brand-circle {
+        box-shadow: 0 15px 50px rgba(14,165,233,0.4);
+    }
+
+    .login-title {
+        font-size: 1rem;
+        color: var(--text-main);
+        font-weight: 600;
+        letter-spacing: -0.03em;
+    }
+
+    .login-sub {
+        font-size: 0.8rem;
+        color: var(--text-dim);
+    }
+
+    .pin-wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .pin-box {
+        width: 3rem;
+        height: 3.5rem;
+        background: rgba(30,41,59,0.07);
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        text-align: center;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-main);
+        outline: none;
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.05),
+                    0 20px 40px rgba(0,0,0,0.08);
+        transition: all 0.18s ease;
+        background-color: var(--bg-card);
+    }
+    [data-theme="dark"] .pin-box {
+        background: rgba(30,41,59,0.7);
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.6),
+                    0 20px 40px rgba(0,0,0,0.8);
+    }
+    .pin-box:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 15px rgba(56,189,248,0.6),
+                    0 30px 60px rgba(0,0,0,0.2),
+                    inset 0 0 20px rgba(0,0,0,0.07);
+    }
+
+    .login-error {
+        color: var(--danger);
+        text-align: center;
+        font-size: 0.8rem;
+        min-height: 1rem;
+    }
+
+    .login-btn {
+        background: radial-gradient(circle at 20% 20%, #38bdf8 0%, #0ea5e9 40%, #075985 80%);
+        border: 0;
+        color: #fff;
+        width: 100%;
+        height: 3rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 1rem;
+        box-shadow: 0 25px 60px rgba(56,189,248,0.4);
+        cursor: pointer;
+        transition: all 0.18s ease;
+    }
+    .login-btn:hover {
+        filter: brightness(1.1);
+        box-shadow: 0 30px 70px rgba(56,189,248,0.55);
+    }
+
+    .login-hint {
+        color: var(--text-dim);
+        font-size: 0.7rem;
+        text-align: center;
+        line-height: 1.4;
+    }
+
+    /* ---------- App Container ---------- */
+    .app {
+        width: 100%;
+        max-width: 1300px;
+        background: var(--bg-card);
+        background-clip: padding-box;
+        border-radius: 1.5rem;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-card);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: background .2s linear, color .2s linear, border .2s linear;
+    }
+
+    /* ---------- Header / Toolbar ---------- */
+    .app-header {
+        background: var(--bg-header);
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 1rem 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 1rem;
+        column-gap: 1rem;
+    }
+
+    /* left block = logo + text */
+    .brand-block {
+        display: flex;
+        flex: 1 1 auto;
+        min-width: 250px;
+        align-items: flex-start;
+        gap: .75rem;
+        flex-wrap: nowrap;
+    }
+
+    .brand-logo-clickable {
+        width: 60px;
+        height: 60px;
+        border-radius: 0.75rem;
+        background: rgba(0,0,0,0.08);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-floating);
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        font-size: .6rem;
+        font-weight: 600;
+        color: var(--text-dim);
+        text-align: center;
+        line-height: 1.2;
+        background-color: var(--bg-card);
+        min-width: 60px;
+        cursor: pointer;
+        position: relative;
+    }
+    .brand-logo-clickable:hover::after {
+        content: "Change Logo";
+        position: absolute;
+        bottom: -1.2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: .5rem;
+        font-size: .6rem;
+        color: var(--text-dim);
+        padding: .2rem .4rem;
+        white-space: nowrap;
+        box-shadow: var(--shadow-floating);
+        line-height: 1.1;
+    }
+    .brand-logo-clickable img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .brand-texts {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .brand-texts h1 {
+        font-size: .95rem;
+        font-weight: 600;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        line-height: 1.2;
+        flex-wrap: wrap;
+    }
+
+    .tag-pill {
+        font-size: 0.7rem;
+        font-weight: 500;
+        background: var(--pill-bg);
+        color: var(--accent);
+        border-radius: 999px;
+        padding: 0.25rem .6rem;
+        line-height: 1.2;
+        border: 1px solid var(--pill-border);
+        text-shadow: 0 0 10px rgba(56,189,248,0.6);
+        box-shadow: 0 20px 40px rgba(56,189,248,0.2);
+    }
+
+    .brand-texts p {
+        margin-top: .25rem;
+        font-size: .75rem;
+        color: var(--text-dim);
+        max-width: 50ch;
+        line-height: 1.4;
+    }
+
+    /* right block = tools */
+    .right-tools {
+        display: flex;
+        flex: 1 1 auto;
+        min-width: 250px;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: flex-end;
+        gap: .75rem;
+        margin-left: auto;
+    }
+
+    .search-box {
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .search-box input {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        padding: .7rem .8rem .7rem 2.2rem;
+        color: var(--text-main);
+        min-width: 160px;
+        font-size: .8rem;
+        outline: none;
+        transition: all .18s ease;
+    }
+    .search-box input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 15px rgba(56,189,248,0.5);
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: .75rem;
+        transform: translateY(-50%);
+        font-size: .7rem;
+        color: var(--text-dim);
+        pointer-events: none;
+        font-family: monospace;
+    }
+
+    .theme-toggle-btn {
+        background: var(--accent-soft);
+        border: 1px solid var(--pill-border);
+        color: var(--accent);
+        border-radius: 1rem;
+        padding: .7rem .8rem;
+        font-size: .7rem;
+        font-weight: 600;
+        box-shadow: 0 20px 40px rgba(14,165,233,0.2);
+        white-space: nowrap;
+        border-color: var(--pill-border);
+    }
+
+    .add-btn {
+        background: rgba(34,197,94,0.12);
+        border: 1px solid rgba(34,197,94,0.4);
+        color: var(--success);
+        border-radius: 1rem;
+        padding: .7rem 1rem;
+        font-size: .8rem;
+        font-weight: 600;
+        box-shadow: 0 20px 40px rgba(34,197,94,0.2);
+        white-space: nowrap;
+    }
+    .add-btn:hover {
+        filter: brightness(1.15);
+        box-shadow: 0 30px 60px rgba(34,197,94,0.4);
+    }
+
+    .logout-btn {
+        background: rgba(239,68,68,0.12);
+        border: 1px solid rgba(239,68,68,0.4);
+        color: var(--danger);
+        border-radius: 1rem;
+        padding: .7rem 1rem;
+        font-size: .8rem;
+        font-weight: 600;
+        box-shadow: 0 20px 40px rgba(239,68,68,0.2);
+        white-space: nowrap;
+    }
+    .logout-btn:hover {
+        filter: brightness(1.15);
+        box-shadow: 0 30px 60px rgba(239,68,68,0.4);
+    }
+
+    /* ---------- Table Wrapper ---------- */
+    .table-wrapper {
+        padding: 1rem;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: var(--shadow-card);
+        transition: background .2s linear, color .2s linear, border .2s linear;
+    }
+
+    thead {
+        background: var(--bg-header);
+        font-size: .7rem;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        color: var(--text-dim);
+    }
+
+    thead th {
+        text-align: left;
+        padding: .9rem .75rem;
+        font-weight: 500;
+        border-bottom: 1px solid var(--border-color);
+        white-space: nowrap;
+    }
+
+    tbody tr {
+        font-size: .8rem;
+        color: var(--text-main);
+        transition: background 0.18s ease;
+    }
+
+    tbody tr:not(:last-child) td {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    tbody tr:hover {
+        background: var(--table-row-hover);
+    }
+
+    td {
+        padding: .9rem .75rem;
+        vertical-align: top;
+        line-height: 1.4;
+    }
+
+    .row-top-line {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .5rem .75rem;
+        line-height: 1.2;
+        font-weight: 500;
+        color: var(--text-main);
+    }
+
+    .new-badge {
+        background: rgba(34,197,94,0.12);
+        border: 1px solid rgba(34,197,94,0.4);
+        color: var(--success);
+        font-size: .6rem;
+        font-weight: 600;
+        line-height: 1;
+        padding: .35rem .5rem;
+        border-radius: 999px;
+        text-shadow: 0 0 10px rgba(34,197,94,0.6);
+        box-shadow: 0 20px 40px rgba(34,197,94,0.25);
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+    .price-tag {
+        display: inline-block;
+        background: var(--pill-bg);
+        border: 1px solid var(--pill-border);
+        border-radius: 999px;
+        padding: .4rem .6rem;
+        font-size: .75rem;
+        font-weight: 500;
+        color: var(--accent);
+        text-shadow: 0 0 10px rgba(56,189,248,0.6);
+        box-shadow: 0 20px 40px rgba(56,189,248,0.2);
+        white-space: nowrap;
+        min-width: 70px;
+        text-align: center;
+    }
+
+    .price-label {
+        display: block;
+        font-size: .65rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        line-height: 1.2;
+        margin-bottom: .4rem;
+    }
+
+    .row-actions {
+        display: flex;
+        gap: .5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-small {
+        border-radius: 1rem;
+        font-size: .7rem;
+        font-weight: 600;
+        line-height: 1.2;
+        padding: .5rem .7rem;
+        min-width: 60px;
+        text-align: center;
+        border: 1px solid transparent;
+        background: rgba(255,255,255,0.05);
+        border-color: var(--border-color);
+        color: var(--text-main);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.07);
+        background-color: var(--bg-card);
+    }
+    [data-theme="dark"] .btn-small {
+        box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+        background: rgba(255,255,255,0.05);
+    }
+
+    .btn-small.edit {
+        background: var(--accent-soft);
+        border-color: var(--pill-border);
+        color: var(--accent);
+        text-shadow: 0 0 10px rgba(56,189,248,0.6);
+        box-shadow: 0 20px 40px rgba(56,189,248,0.3);
+    }
+    .btn-small.delete {
+        background: rgba(239,68,68,0.12);
+        border-color: rgba(239,68,68,0.4);
+        color: var(--danger);
+        text-shadow: 0 0 10px rgba(239,68,68,0.6);
+        box-shadow: 0 20px 40px rgba(239,68,68,0.25);
+    }
+
+    /* ---------- Modal ---------- */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        z-index: 999;
+    }
+
+    .modal {
+        width: 100%;
+        max-width: 400px;
+        background: var(--bg-card);
+        border-radius: 1.5rem;
+        box-shadow: var(--shadow-floating);
+        border: 1px solid var(--border-color);
+        padding: 1.25rem 1rem 1.5rem;
+        position: relative;
+        color: var(--text-main);
+    }
+
+    .modal-title {
+        font-size: .9rem;
+        font-weight: 600;
+        color: var(--text-main);
+        margin-bottom: .75rem;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        line-height: 1.2;
+    }
+
+    .close-modal {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--border-color);
+        border-radius: 999px;
+        width: 28px;
+        height: 28px;
+        color: var(--text-dim);
+        font-size: .7rem;
+        display: grid;
+        place-items: center;
+        line-height: 1;
+        cursor: pointer;
+        background-color: var(--bg-card);
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: .8rem;
+    }
+
+    .form-group label {
+        font-size: .7rem;
+        color: var(--text-dim);
+        margin-bottom: .4rem;
+    }
+
+    .form-input,
+    .form-textarea {
+        width: 100%;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        padding: .7rem .8rem;
+        color: var(--text-main);
+        font-size: .8rem;
+        outline: none;
+        resize: none;
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.05),
+                    0 20px 40px rgba(0,0,0,0.08);
+        transition: all 0.18s ease;
+    }
+    [data-theme="dark"] .form-input,
+    [data-theme="dark"] .form-textarea {
+        background: rgba(30,41,59,0.6);
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.6),
+                    0 20px 40px rgba(0,0,0,0.8);
+    }
+    .form-input:focus,
+    .form-textarea:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 15px rgba(56,189,248,0.6),
+                    0 30px 60px rgba(0,0,0,0.2),
+                    inset 0 0 20px rgba(0,0,0,0.07);
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: .75rem;
+        margin-top: .5rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .save-btn {
+        background: radial-gradient(circle at 20% 20%, #38bdf8 0%, #0ea5e9 40%, #075985 80%);
+        border: 0;
+        color: #fff;
+        font-size: .8rem;
+        font-weight: 600;
+        line-height: 1;
+        border-radius: 1rem;
+        padding: .75rem 1rem;
+        cursor: pointer;
+        box-shadow: 0 25px 60px rgba(56,189,248,0.4);
+    }
+    .cancel-btn {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--border-color);
+        color: var(--text-main);
+        border-radius: 1rem;
+        padding: .75rem 1rem;
+        font-size: .8rem;
+        font-weight: 500;
+        cursor: pointer;
+        background-color: var(--bg-card);
+    }
+
+    /* ---------- Responsive / Mobile Cards ---------- */
+    @media (max-width: 600px) {
+
+        /* header stack */
+        .app-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .brand-block {
+            width: 100%;
+        }
+        .right-tools {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        /* table -> cards */
+        table {
+            border: 0;
+            min-width: 0;
+        }
+        thead {
+            display: none;
+        }
+        tbody {
+            display: grid;
+            gap: 1rem;
+        }
+        tbody tr {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-card);
+            padding: 1rem;
+        }
+        tbody tr:hover {
+            background: var(--bg-card);
+        }
+        tbody tr:not(:last-child) td {
+            border-bottom: 0;
+        }
+        td {
+            display: block;
+            padding: .4rem 0;
+        }
+
+        td[data-col="name"] {
+            padding-top: 0;
+            font-size: .9rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        td[data-col="buy"],
+        td[data-col="base"],
+        td[data-col="final"],
+        td[data-col="notes"] {
+            font-size: .8rem;
+        }
+
+        .price-label {
+            display: inline-block;
+            margin-bottom: .25rem;
+            margin-right: .5rem;
+        }
+
+        .row-actions {
+            padding-top: .75rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-wrapper">
+    <div class="login-screen">
+        <div class="login-header">
+            <div class="brand-circle">
+                IT.<br>SUPPORT.<br>OM
+            </div>
+            <div class="login-title">Secure Access</div>
+            <div class="login-sub">Enter 4-digit passcode to manage WiFi device prices</div>
+        </div>
+
+        <div class="pin-wrapper">
+            <input class="pin-box" type="password" maxlength="1" inputmode="numeric" />
+            <input class="pin-box" type="password" maxlength="1" inputmode="numeric" />
+            <input class="pin-box" type="password" maxlength="1" inputmode="numeric" />
+            <input class="pin-box" type="password" maxlength="1" inputmode="numeric" />
+        </div>
+
+        <div class="login-error" id="loginError"></div>
+
+        <button class="login-btn" id="loginBtn">Unlock</button>
+
+        <div class="login-hint">
+            Demo code: 9699
+        </div>
+    </div>
+</div>
+
+<!-- APP -->
+<div class="app hidden">
+    <header class="app-header">
+        <div class="brand-block">
+            <!-- clickable logo box -->
+            <div class="brand-logo-clickable" id="logoPreview">
+                IT.SUPPORT.OM<br>Logo
+            </div>
+            <input type="file" id="logoInput" accept="image/*" style="display:none" />
+
+            <div class="brand-texts">
+                <h1>
+                    IT.SUPPORT.OM
+                    <span class="tag-pill">Live</span>
+                </h1>
+                <p>WiFi devices / stock / pricing dashboard. Local browser storage. Fast inline update.</p>
+            </div>
+        </div>
+
+        <div class="right-tools">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search device..." />
+            </div>
+
+            <button class="theme-toggle-btn" id="themeToggleBtn">Light Mode</button>
+
+            <button class="add-btn" id="openAddBtn">+ Add Device</button>
+
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+    </header>
+
+    <section class="table-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th style="min-width:200px;">Device / Status</th>
+                <th style="min-width:130px;">Original Cost</th>
+                <th style="min-width:130px;">Base Price</th>
+                <th style="min-width:130px;">Final Price</th>
+                <th style="min-width:200px;">Notes</th>
+                <th style="min-width:110px;">Actions</th>
+            </tr>
+            </thead>
+            <tbody id="deviceTableBody">
+            <!-- rows injected by JS -->
+            </tbody>
+        </table>
+    </section>
+</div>
+
+<!-- MODAL ADD / EDIT -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title">
+            <span id="modalTitle">Add Device</span>
+            <button class="close-modal" id="closeModalBtn">✕</button>
+        </div>
+
+        <div class="form-group">
+            <label for="deviceName">Device Name</label>
+            <input class="form-input" id="deviceName" placeholder="e.g. TP-Link Archer AX73" />
+        </div>
+
+        <div class="form-group">
+            <label for="priceBuy">Original Cost (buy cost)</label>
+            <input class="form-input" id="priceBuy" placeholder="e.g. 25.000" />
+        </div>
+
+        <div class="form-group">
+            <label for="priceBase">Base Price</label>
+            <input class="form-input" id="priceBase" placeholder="e.g. 39.900" />
+        </div>
+
+        <div class="form-group">
+            <label for="priceFinal">Final Price (sell)</label>
+            <input class="form-input" id="priceFinal" placeholder="e.g. 42.000" />
+        </div>
+
+        <div class="form-group">
+            <label for="deviceNotes">Notes</label>
+            <textarea class="form-textarea" rows="3" id="deviceNotes" placeholder="WiFi 6 / Dual Band / 4x4 MU-MIMO"></textarea>
+        </div>
+
+        <div class="modal-actions">
+            <button class="cancel-btn" id="cancelModalBtn">Cancel</button>
+            <button class="save-btn" id="saveModalBtn">Save</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================
+   CONFIG
+========================= */
+const PASSCODE = "9699"; // change for production
+const NEW_BADGE_DAYS = 5;
+
+/* DOM ELEMENTS */
+const rootHtml       = document.documentElement;
+const loginWrapper   = document.querySelector(".login-wrapper");
+const appEl          = document.querySelector(".app");
+const loginBtn       = document.getElementById("loginBtn");
+const loginError     = document.getElementById("loginError");
+const pinInputs      = document.querySelectorAll(".pin-box");
+
+const logoutBtn      = document.getElementById("logoutBtn");
+const searchInput    = document.getElementById("searchInput");
+const tableBody      = document.getElementById("deviceTableBody");
+
+const modalOverlay   = document.getElementById("modalOverlay");
+const modalTitle     = document.getElementById("modalTitle");
+const deviceNameIn   = document.getElementById("deviceName");
+const priceBuyIn     = document.getElementById("priceBuy");
+const priceBaseIn    = document.getElementById("priceBase");
+const priceFinalIn   = document.getElementById("priceFinal");
+const deviceNotesIn  = document.getElementById("deviceNotes");
+const saveModalBtn   = document.getElementById("saveModalBtn");
+const cancelModalBtn = document.getElementById("cancelModalBtn");
+const closeModalBtn  = document.getElementById("closeModalBtn");
+const openAddBtn     = document.getElementById("openAddBtn");
+
+const logoPreview    = document.getElementById("logoPreview");
+const logoInput      = document.getElementById("logoInput");
+
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+
+/* STATE */
+let items = []; // {id,name,buy,base,final,notes,createdAt}
+let editingId = null;
+let currentTheme = "dark";
+
+/* LOCAL STORAGE KEYS */
+const STORAGE_KEY  = "wifi-devices-data-v3";
+const AUTH_KEY     = "wifi-devices-auth";
+const THEME_KEY    = "wifi-devices-theme";
+const LOGO_KEY     = "wifi-devices-logo";
+
+/* STORAGE HELPERS */
+function loadItems() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+            const now = Date.now();
+            items = [
+                { id: genId(), name: "TP-Link Archer AX73", buy:"25.000", base:"39.900", final:"42.000", notes:"WiFi 6 / Dual Band / 4x4 MU-MIMO", createdAt: now },
+                { id: genId(), name: "Huawei 5G CPE Pro 2", buy:"60.000", base:"89.000", final:"95.000", notes:"5G Router / WiFi 6 / Gigabit LAN", createdAt: now - 7*24*3600*1000 },
+                { id: genId(), name: "Ubiquiti UniFi AP AC Lite", buy:"28.000", base:"45.000", final:"49.000", notes:"Ceiling AP / PoE / 867 Mbps 5GHz", createdAt: now - 2*24*3600*1000 },
+            ];
+            saveItems();
+        } else {
+            items = JSON.parse(raw);
+        }
+    } catch (e) {
+        console.error("loadItems error:", e);
+        items = [];
+    }
+}
+
+function saveItems() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+}
+
+function setAuth(val) {
+    localStorage.setItem(AUTH_KEY, val ? "1" : "0");
+}
+
+function isAuthed() {
+    return localStorage.getItem(AUTH_KEY) === "1";
+}
+
+function saveTheme(theme) {
+    localStorage.setItem(THEME_KEY, theme);
+}
+function loadTheme() {
+    const t = localStorage.getItem(THEME_KEY);
+    if (t === "light" || t === "dark") {
+        currentTheme = t;
+    } else {
+        currentTheme = "dark";
+    }
+    applyTheme();
+}
+
+function saveLogo(dataUrl) {
+    if (!dataUrl) return;
+    localStorage.setItem(LOGO_KEY, dataUrl);
+}
+function loadLogo() {
+    const dataUrl = localStorage.getItem(LOGO_KEY);
+    if (dataUrl) {
+        logoPreview.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = dataUrl;
+        logoPreview.appendChild(img);
+    }
+}
+
+/* THEME TOGGLE */
+function applyTheme() {
+    if (currentTheme === "light") {
+        rootHtml.setAttribute("data-theme", "light");
+        themeToggleBtn.textContent = "Dark Mode";
+    } else {
+        rootHtml.setAttribute("data-theme", "dark");
+        themeToggleBtn.textContent = "Light Mode";
+    }
+}
+themeToggleBtn.addEventListener("click", () => {
+    currentTheme = (currentTheme === "dark") ? "light" : "dark";
+    applyTheme();
+    saveTheme(currentTheme);
+});
+
+/* LOGO UPLOAD (click on logo box) */
+logoPreview.addEventListener("click", () => {
+    logoInput.click();
+});
+logoInput.addEventListener("change", (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+        const dataUrl = ev.target.result;
+        saveLogo(dataUrl);
+        loadLogo();
+    };
+    reader.readAsDataURL(file);
+});
+
+/* UTIL */
+function genId() {
+    return "id-" + Date.now() + "-" + Math.floor(Math.random()*100000);
+}
+
+function clearPin() {
+    pinInputs.forEach(inp => inp.value = "");
+    pinInputs[0].focus();
+}
+
+function getEnteredPin() {
+    return Array.from(pinInputs).map(i => i.value).join("");
+}
+
+function isNew(createdAt) {
+    const ageMs = Date.now() - createdAt;
+    const maxMs = NEW_BADGE_DAYS * 24 * 3600 * 1000;
+    return ageMs <= maxMs;
+}
+
+/* LOGIN FLOW */
+function tryLogin() {
+    const pin = getEnteredPin();
+    if (pin === PASSCODE) {
+        setAuth(true);
+        loginError.textContent = "";
+        showApp();
+    } else {
+        loginError.textContent = "Wrong code. Try again.";
+        clearPin();
+    }
+}
+loginBtn.addEventListener("click", tryLogin);
+
+// PIN auto navigation
+pinInputs.forEach((input, idx) => {
+    input.addEventListener("input", e => {
+        const val = e.target.value.replace(/\D/g,"");
+        e.target.value = val.slice(-1);
+        if (e.target.value && idx < pinInputs.length - 1) {
+            pinInputs[idx+1].focus();
+        }
+    });
+
+    input.addEventListener("keydown", e => {
+        if (e.key === "Backspace" && !e.target.value && idx > 0) {
+            pinInputs[idx-1].focus();
+        }
+        if (e.key === "Enter" && idx === pinInputs.length - 1) {
+            tryLogin();
+        }
+    });
+});
+
+/* LOGOUT */
+logoutBtn.addEventListener("click", () => {
+    setAuth(false);
+    hideApp();
+    clearPin();
+});
+
+/* RENDER TABLE */
+function renderTable() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    tableBody.innerHTML = "";
+
+    // newest first
+    const sorted = [...items].sort((a,b) => b.createdAt - a.createdAt);
+
+    const filtered = sorted.filter(row =>
+        row.name.toLowerCase().includes(searchTerm) ||
+        row.notes.toLowerCase().includes(searchTerm) ||
+        row.base.toLowerCase().includes(searchTerm) ||
+        row.final.toLowerCase().includes(searchTerm) ||
+        row.buy.toLowerCase().includes(searchTerm)
+    );
+
+    if (filtered.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 6;
+        td.style.textAlign = "center";
+        td.style.color = "var(--text-dim)";
+        td.style.padding = "2rem .75rem";
+        td.textContent = "No devices found.";
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+        return;
+    }
+
+    filtered.forEach(row => {
+        const tr = document.createElement("tr");
+
+        // Device / Status
+        const tdName = document.createElement("td");
+        tdName.setAttribute("data-col","name");
+        const topLine = document.createElement("div");
+        topLine.className = "row-top-line";
+        const nameEl = document.createElement("span");
+        nameEl.textContent = row.name;
+        topLine.appendChild(nameEl);
+
+        if (isNew(row.createdAt)) {
+            const newBadge = document.createElement("span");
+            newBadge.className = "new-badge";
+            newBadge.textContent = "NEW";
+            topLine.appendChild(newBadge);
+        }
+        tdName.appendChild(topLine);
+
+        // Original Cost
+        const tdBuy = document.createElement("td");
+        tdBuy.setAttribute("data-col","buy");
+        const buyLabel = document.createElement("span");
+        buyLabel.className = "price-label";
+        buyLabel.textContent = "Original Cost";
+        const buyVal = document.createElement("span");
+        buyVal.className = "price-tag";
+        buyVal.textContent = row.buy + " OMR";
+        tdBuy.appendChild(buyLabel);
+        tdBuy.appendChild(buyVal);
+
+        // Base Price
+        const tdBase = document.createElement("td");
+        tdBase.setAttribute("data-col","base");
+        const baseLabel = document.createElement("span");
+        baseLabel.className = "price-label";
+        baseLabel.textContent = "Base Price";
+        const baseVal = document.createElement("span");
+        baseVal.className = "price-tag";
+        baseVal.textContent = row.base + " OMR";
+        tdBase.appendChild(baseLabel);
+        tdBase.appendChild(baseVal);
+
+        // Final Price
+        const tdFinal = document.createElement("td");
+        tdFinal.setAttribute("data-col","final");
+        const finalLabel = document.createElement("span");
+        finalLabel.className = "price-label";
+        finalLabel.textContent = "Final Price";
+        const finalVal = document.createElement("span");
+        finalVal.className = "price-tag";
+        finalVal.textContent = row.final + " OMR";
+        tdFinal.appendChild(finalLabel);
+        tdFinal.appendChild(finalVal);
+
+        // Notes
+        const tdNotes = document.createElement("td");
+        tdNotes.setAttribute("data-col","notes");
+        tdNotes.textContent = row.notes;
+
+        // Actions
+        const tdActions = document.createElement("td");
+        tdActions.setAttribute("data-col","actions");
+        const actionsDiv = document.createElement("div");
+        actionsDiv.className = "row-actions";
+
+        const editBtn = document.createElement("button");
+        editBtn.className = "btn-small edit";
+        editBtn.textContent = "Edit";
+        editBtn.addEventListener("click", () => openModalEdit(row.id));
+
+        const delBtn = document.createElement("button");
+        delBtn.className = "btn-small delete";
+        delBtn.textContent = "Delete";
+        delBtn.addEventListener("click", () => deleteItem(row.id));
+
+        actionsDiv.appendChild(editBtn);
+        actionsDiv.appendChild(delBtn);
+        tdActions.appendChild(actionsDiv);
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdBuy);
+        tr.appendChild(tdBase);
+        tr.appendChild(tdFinal);
+        tr.appendChild(tdNotes);
+        tr.appendChild(tdActions);
+
+        tableBody.appendChild(tr);
+    });
+}
+
+/* SEARCH */
+searchInput.addEventListener("input", renderTable);
+
+/* MODAL HANDLERS */
+openAddBtn.addEventListener("click", openModalAdd);
+closeModalBtn.addEventListener("click", closeModal);
+cancelModalBtn.addEventListener("click", closeModal);
+
+modalOverlay.addEventListener("click", e => {
+    if (e.target === modalOverlay) {
+        closeModal();
+    }
+});
+
+function openModalAdd() {
+    editingId = null;
+    modalTitle.textContent = "Add Device";
+    deviceNameIn.value = "";
+    priceBuyIn.value = "";
+    priceBaseIn.value = "";
+    priceFinalIn.value = "";
+    deviceNotesIn.value = "";
+    modalOverlay.style.display = "flex";
+    deviceNameIn.focus();
+}
+
+function openModalEdit(id) {
+    editingId = id;
+    const row = items.find(i => i.id === id);
+    if (!row) return;
+    modalTitle.textContent = "Edit Device";
+    deviceNameIn.value  = row.name;
+    priceBuyIn.value    = row.buy;
+    priceBaseIn.value   = row.base;
+    priceFinalIn.value  = row.final;
+    deviceNotesIn.value = row.notes;
+    modalOverlay.style.display = "flex";
+    deviceNameIn.focus();
+}
+
+function closeModal() {
+    modalOverlay.style.display = "none";
+}
+
+/* SAVE ADD / EDIT */
+saveModalBtn.addEventListener("click", () => {
+    const name   = deviceNameIn.value.trim();
+    const buy    = priceBuyIn.value.trim();
+    const base   = priceBaseIn.value.trim();
+    const finalP = priceFinalIn.value.trim();
+    const notes  = deviceNotesIn.value.trim();
+
+    if (!name || !buy || !base || !finalP) {
+        alert("Please enter device name and all prices.");
+        return;
+    }
+
+    if (editingId) {
+        // update existing
+        items = items.map(it => it.id === editingId ? {
+            ...it,
+            name,
+            buy,
+            base,
+            final: finalP,
+            notes
+        } : it);
+    } else {
+        // add new (for sorting we use createdAt)
+        items.push({
+            id: genId(),
+            name,
+            buy,
+            base,
+            final: finalP,
+            notes,
+            createdAt: Date.now()
+        });
+    }
+
+    saveItems();
+    closeModal();
+    renderTable();
+});
+
+/* DELETE */
+function deleteItem(id) {
+    const ok = confirm("Delete this device?");
+    if (!ok) return;
+    items = items.filter(it => it.id !== id);
+    saveItems();
+    renderTable();
+}
+
+/* SHOW / HIDE APP */
+function showApp() {
+    loginWrapper.classList.add("hidden");
+    appEl.classList.remove("hidden");
+    renderTable();
+    loadLogo();
+    loadTheme();
+}
+
+function hideApp() {
+    appEl.classList.add("hidden");
+    loginWrapper.classList.remove("hidden");
+}
+
+/* INIT */
+(function init() {
+    loadItems();
+    loadTheme();
+    if (isAuthed()) {
+        showApp();
+    } else {
+        hideApp();
+        clearPin();
+    }
+})();
+</script>
+</body>
+</html>
